@@ -17,3 +17,24 @@ print(digits)
 
 # Masking program
 text = input("Enter you text to mask: ").strip()
+masked_text = "**" + text[2:-2] + "**"
+print(masked_text)
+
+# Predict before running
+# Given input number from user and divide by 6 and print results with 2 decimal point
+number = 101
+print(f"Output :{number/6: .2f}")
+
+# What happens when print method has different types of arguments
+number = 9
+print("Welcome to Python class at:" + str(number))
+
+# "Who is the black sheep" - find,
+text = "who is the black sheep"
+print(len(text.replace(" ", "")))  # 1) length without space -> return 31
+
+# 2) find last 4 chars ->  return "is the black sheep"
+print(text[4:])
+
+# 3) what split [-3:3] -> returns "ehe"
+print(text[-3:3])
