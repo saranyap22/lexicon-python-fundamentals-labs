@@ -1,0 +1,55 @@
+# Temperature report
+def celcius_to_farenheit(celcius_temp):
+    return celcius_temp * 9/5 + 32
+
+
+def classification(celcius_temp):
+    if celcius_temp <= 20:
+        return "cold"
+    elif celcius_temp <= 30:
+        return "warm"
+    else:
+        return "hot"
+
+
+def report(temperatures):
+    reports = []
+    for temperature in temperatures:
+        entry = {"temp_in_celcius": temperature,
+                 "tem_in_farenheit": celcius_to_farenheit(temperature),
+                 "report": classification(temperature)}
+        reports.append(entry)
+    return reports
+
+
+temperatures = {23, 45, 12, 5, -2, 32, 30, 26, 37}
+report(temperatures)
+print(f"{"*" * 50} \n {report(temperatures)}")
+
+
+# Order calculation
+def calculate_subtotal(order):
+    return order["quantity"] * order["price"]
+
+
+def calculate_discount(subtotal, discount):
+    return subtotal * discount / 100
+
+
+def get_final_total_amount(orders):
+    total_price = 0
+    for order in orders:
+        subtotal = calculate_subtotal(order)
+        discount = calculate_discount(subtotal, 20)
+        price = subtotal - discount
+        total_price += price
+    return total_price
+
+
+orders = [
+    {"item": "laptop", "customer": "saranya", "quantity": 2, "price": 12000},
+    {"item": "Pendrive", "customer": "Allean", "quantity": 6, "price": 1200},
+    {"item": "monitor", "customer": "Dhruv", "quantity": 1, "price": 120}
+]
+
+print(f"Final Total Price: {get_final_total_amount(orders)}")
