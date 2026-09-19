@@ -27,10 +27,16 @@ def get_long_words(words, minimum_length):
     return long_words
 
 
+def get_long_words_comprehension(words, minimum_length):
+    """ Function to get long words using list comprehension"""
+    return [word for word in words if len(word) >= minimum_length]
+
+
 words = ["ice", "bed", "unberlla", "sofa", "tv", "computer_monitor"]
 print(get_long_words(words, 4))
 print(get_long_words(words, 7))
-print(get_long_words(words, 2))
+print(get_long_words(words, 9))
+print(get_long_words_comprehension(words, 1))
 
 
 def find_student(students, name):
@@ -74,9 +80,15 @@ def get_active_users(users):
     return active_users
 
 
+def get_active_users_with_comprehension(users):
+    return [user for user in users if user["active"]]
+
+
 users = [
     {"name": "Allan", "city": "solna", "active": True},
     {"name": "Bob", "city": "Stockholm", "active": False},
     {"name": "Allan", "city": "Sollentuna", "active": False}
 ]
-get_active_users(users)
+print(get_active_users(users))
+print("Active Users with comprehension",
+      get_active_users_with_comprehension(users))
