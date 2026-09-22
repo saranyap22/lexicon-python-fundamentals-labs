@@ -25,7 +25,7 @@ products = [
 product_in_stock = [product for product in products if product["stock"] > 0]
 
 total = 0
-highest_price = products[0]["price"]
+highest = product_in_stock[0]
 
 print(f"{"Product name":<15} {"Total value":>15}")
 
@@ -35,10 +35,10 @@ for product in product_in_stock:
     print(f"{product["name"]:<15}: {product_value:<15}")
     total += product_value
 
-    if product["price"] > highest_price:
-        highest_price = product["price"]
+    if product["price"] > highest["price"]:
+        highest = product
 print(f"Total value of in stock products: {total}")
-print(f"Highest priced Product: {highest_price}")
+print(f"Highest priced Product Name: {highest["name"]}")
 
 # ==================================================
 # TASK 2
