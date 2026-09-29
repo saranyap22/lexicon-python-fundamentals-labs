@@ -1,12 +1,14 @@
 # Hotel Booking System
-Manages Life cycles of Hotel Booking
+- **Status** - In Progress - MVP v1, see completed and Known issues for whats left
+
+Manages Life cycles of Hotel Booking System
 
 
 ## Problem Statement
 Build Booking system for Hotel Management which handles create Booking, manage Booking (update and cancellation), view booking infomation. 
 
 ## Object / Responsibilities
-- **Holtel** - Represents Hotel consists of one or multiple rooms object
+- **Hotel** - Represents Hotel consists of one or multiple rooms object
 
 - **Room** - Represents the Room consists of Guest object and Booking related information
 
@@ -19,9 +21,9 @@ Build Booking system for Hotel Management which handles create Booking, manage B
 - **Booking** - Represent the combined data related eachother of all standalone data
 
 ## Booking Statuses
-- ```NEW```
 - ```RESERVED```
-- ```BOOKED```
+- ```CONFIRMED```
+- ```UPDATED```
 - ```CANCELLED```
 
 ## Minimum Viable Version (v1)
@@ -32,4 +34,38 @@ Build Booking system for Hotel Management which handles create Booking, manage B
 - Proper object state tracking for all the Rooms of Hotel
 - All objects interacts with each other
 - Summary of all booked rooms
+
+
+## Completed
+- Created Class for Hotel, Room, Guest,Booking objects
+- Created Booking features like create booking with validations
+    - Business rule implementation for conflict booking
+        - ````Create Booking request with same dates or conflicting dates of booked````
+- Manage Booking (view, update and Cancellation)
+- Proper object state tracking for all the Rooms of Hotel
+- All objects interacts with each other
+- Summary of all booked rooms
+
+## Known Issues
+- Remove room feature needs to be implemented for hotel
+- Current Booking object state transition is not clear.
+    - ```current ('NEW','CANCELLED')```
+    - ```to be corrected ( 'RESERVED','CONFIRMED','UPDATED','CANCELLED')```
 - Statistics on all room occupancy
+- Implement HotelService to have its own hotel collection to keep track of object state
+- Implement Guest Service to handle create and update guests profile
+- Cleanup the way simulating Hotel Booking system
+
+## Design Notes
+- Objects for depicting data 
+    - **Hotel, Room, Guest, Booking**
+- Services to hold collection of data and handle actions
+    - Booking Service 
+        - has **List of booking** since no natural parent for holding all bookings
+        - has methods **create booking, retrieve booking, update booking**
+    - Room Service 
+        - has methods **create room and update room**
+    - Hotel Service **create hotel and update hotel**
+    - Hotel Booking **Simulating hotel booking flow interation between objects**
+    - Kept collection of Room objects (rooms) as set intead of dictinoary to keep it simple for updating
+    - Kept collection of Booking objects (bookings) as List since same room and guest can have multiple bookings for different dates
