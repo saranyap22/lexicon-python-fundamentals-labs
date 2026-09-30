@@ -27,13 +27,29 @@ rooms.add(room_service.create_room("78t", "NONAC", 45, 3, 4500.65))
 rooms.add(room_service.create_room("98r", "NONAC", 10, 1, 300.00))
 rooms.add(room_service.create_room("55f", "AC", 40, 4, 1400.78))
 rooms.add(room_service.create_room("101c", "NONAC", 34, 3, 1500.00))
+
 hotel_service.add_rooms_to_hotel("Hotel Grand Palace", rooms)
+
+# ----------------------------------------
+# Simulate Remove room
+print("Before Remove Room")
+hotel_service.find_room("Hotel Grand Palace", "55f")
+
+hotel_service.remove_room_from_hotel("Hotel Grand Palace", "55f")
+print("After Remove Room")
+# hotel_service.find_room("Hotel Grand Palace", "55f")
+
+# ----------------------------------------
+# Simulate update room
+
+room_service.update_room("Hotel Grand Palace", "101c", 13, 2, 1500.00)
+print(room_service.find_room("Hotel Grand Palace", "101c"))
 
 # ----------------------------------------
 # Simulate creating guest
 guest_contact = Contact("grace@gmail.com", "0756543423")
 guest = Guest("Grace", 25, guest_contact, "Diktarvagen 11")
-
+print("Guest Information: ", guest)
 
 # ----------------------------------------
 # Simulate creating Booking
@@ -43,12 +59,14 @@ booking_service = BookingService(hotel_service, room_service)
 booking_service.create_booking("Hotel Grand Palace",
                                "101c", "26-9-2026", "27-9-2026", 1, [guest])
 
+# ----------------------------------------
+# Simulate Retrieve Booking
 booking_service.retrieve_booking_by_guest(guest)
+
+# ----------------------------------------
+# Simulate Summary of Booking
 
 booking_service.summary_of_bookings()
 
-
 # ----------------------------------------
 # Simulate update Booking
-room_service.update_room("Hotel Grand Palace", "101c", 13, 2, 1500.00)
-print(room_service.find_room("Hotel Grand Palace", "101c"))

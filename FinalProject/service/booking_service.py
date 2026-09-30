@@ -1,8 +1,15 @@
+from model.booking import Booking
+
+
 class BookingService:
     bookings = []
 
+    def __init__(self, hotel_service, room_service):
+        self.hotel_service = hotel_service
+        self.room_service = room_service
+
     def create_booking(self, hotel, room_number, start_date, end_date, no_of_guests, guests):
-        room = room_service.find_room(hotel, room_number)
+        room = self.room_service.find_room(hotel, room_number)
 
         if room is None:
             raise ValueError(

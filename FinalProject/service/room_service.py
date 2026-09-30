@@ -3,6 +3,9 @@ from model.room import Room
 
 class RoomService:
 
+    def __init__(self, hotel_service):
+        self.hotel_service = hotel_service
+
     def create_room(self, number, category, area, max_guests, price):
         return Room(number, category, area, max_guests, price)
 
@@ -11,9 +14,6 @@ class RoomService:
         room.area = area
         room.max_guests = max_guests
         room.price = price
-        return room
 
     def find_room(self, hotel, number):
-        for room in hotel.rooms:
-            if number == room.number:
-                return room
+        return self.hotel_service.find_room(hotel, number)

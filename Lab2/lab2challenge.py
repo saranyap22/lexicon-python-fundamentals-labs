@@ -169,3 +169,43 @@ backup_participants["Mahil"]["age"] = 80
 print(f"Backup Participant age update: {backup_participants["Mahil"]["age"]}")
 print(
     f"Original participant age after updating Backup participants: {participants["Mahil"]["age"]}")
+
+# -----------------------------------------------------
+
+# Part 7: Restructure the data
+session_titles = [
+    "Python for AI",
+    "Building APIs",
+    "Introduction to LLMs"
+]
+
+speakers = [
+    "Ada",
+    "Grace",
+    "Alan"
+]
+
+rooms = [
+    "Room A",
+    "Room B",
+    "Room C"
+]
+
+# Observation - All data heere are depicted as List and as separate information
+# ToDo - In current structure it is list but all has to be unique in nature so set would be best
+# ToDo - The data is more useful when closely related together as key value (dict) is best suitable
+sessions = [
+    {"title": "Python for AI", "speaker": "Ada", "room": "Room A"},
+    {"title": "Python for AI", "speaker": "Grace", "room": "Room B"},
+    {"title": "Building APIs", "speaker": "Ada", "room": "Room C"},
+    {"title": "Building APIs", "speaker": "Alan", "room": "Room A"},
+    {"title": "Introduction to LLMs", "Grace": "Ada", "room": "Room B"},
+    {"title": "Introduction to LLMs", "speaker": "Ada", "room": "Room C"},
+    {"title": "Introduction to LLMs", "speaker": "Alan", "room": "Room A"}
+]
+
+titles = {session["title"] for session in sessions}
+speakers = {session["speaker"] for session in sessions}
+rooms = {session["room"] for session in sessions}
+
+print(titles, speakers, rooms)
