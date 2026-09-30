@@ -11,3 +11,9 @@ class Contact:
             f"Email: {self.email}\n"
             f"Mobile: {self.mobile}\n"
         )
+
+    def __repr__(self):
+        return (
+            f"Email: {self.email!r}"
+            f"Mobile: {self.mobile!r}"
+        )

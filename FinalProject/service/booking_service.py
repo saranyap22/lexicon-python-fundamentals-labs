@@ -4,12 +4,14 @@ from model.booking import Booking
 class BookingService:
     bookings = []
 
-    def __init__(self, hotel_service, room_service):
+    def __init__(self, hotel_service, room_service, guest_service):
         self.hotel_service = hotel_service
         self.room_service = room_service
+        self.guest_service = guest_service
 
-    def create_booking(self, hotel, room_number, start_date, end_date, no_of_guests, guests):
+    def create_booking(self, hotel, room_number, start_date, end_date, no_of_guests, guest_name):
         room = self.room_service.find_room(hotel, room_number)
+        guest = self.guest_service.find_guest(guest_name)
 
         if room is None:
             raise ValueError(
@@ -21,15 +23,15 @@ class BookingService:
         self.check_availability_for_dates(room, start_date, end_date)
 
         booking = Booking(room, start_date, end_date,
-                          no_of_guests, guests, status="NEW")
+                          no_of_guests, [guest], status="NEW")
         self.bookings.append(booking)
         print(f"Created Booking: {booking} and added to Booking List")
 
-    def retrieve_booking_by_guest(self, guest):
+    def retrieve_booking_by_guest(self, guest_name):
         return [
             booking
             for booking in self.bookings
-            if guest in booking.guests
+            if self.guest_service.find_guest(guest_name) in booking.guests
         ]
 
     def retrieve_booking_by_room(self, room):

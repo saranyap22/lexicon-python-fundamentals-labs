@@ -2,7 +2,7 @@
 from service.hotel_service import HotelService
 from service.room_service import RoomService
 from service.booking_service import BookingService
-from model.guest import Guest
+from service.guest_service import GuestService
 from model.contact import Contact
 
 # ----------------------------------------
@@ -47,21 +47,29 @@ print(room_service.find_room("Hotel Grand Palace", "101c"))
 
 # ----------------------------------------
 # Simulate creating guest
+guest_service = GuestService()
+
 guest_contact = Contact("grace@gmail.com", "0756543423")
-guest = Guest("Grace", 25, guest_contact, "Diktarvagen 11")
-print("Guest Information: ", guest)
+guest_service.create_guest("Grace", 25, guest_contact, "Diktarvagen 11")
+print("Guest Information: ", guest_service.guests)
+
+# ----------------------------------------
+# Simulate updating guest
+guest_service.update_guest("Grace", age=35)
+guest_service.update_guest("Grace", address="Teknarvagen 3")
+print("Updated Guest Information: ", guest_service.find_guest("Grace"))
 
 # ----------------------------------------
 # Simulate creating Booking
 
-booking_service = BookingService(hotel_service, room_service)
+booking_service = BookingService(hotel_service, room_service, guest_service)
 
 booking_service.create_booking("Hotel Grand Palace",
-                               "101c", "26-9-2026", "27-9-2026", 1, [guest])
+                               "101c", "26-9-2026", "27-9-2026", 1, "Grace")
 
 # ----------------------------------------
 # Simulate Retrieve Booking
-booking_service.retrieve_booking_by_guest(guest)
+booking_service.retrieve_booking_by_guest("Grace")
 
 # ----------------------------------------
 # Simulate Summary of Booking
