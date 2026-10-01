@@ -42,7 +42,7 @@ print("After Remove Room")
 # ----------------------------------------
 # Simulate update room
 
-room_service.update_room("Hotel Grand Palace", "101c", 13, 2, 1500.00)
+room_service.update_room("Hotel Grand Palace", "101c", 13, 2, 2000.00)
 print(room_service.find_room("Hotel Grand Palace", "101c"))
 
 # ----------------------------------------

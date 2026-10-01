@@ -1,7 +1,7 @@
 class Guest:
     """Represent a Guest in a Booking"""
 
-    def __init__(self, name, age, contact, address):
+    def __init__(self, name: str, age: int, contact: str, address: str):
         self.name = name
         self.age = age
         self.contact = contact

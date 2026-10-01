@@ -1,9 +1,13 @@
+from model.room import Room
+from model.guest import Guest
+
+
 class Booking:
     """Represent a Booking"""
 
-    def __init__(self, room, start_date, end_date, no_of_guests, guests=None, status="UNKNOWN"):
+    def __init__(self, room: Room, start_date: str, end_date: str, no_of_guests: int, guest: Guest | None = None, status="UNKNOWN"):
         self.room = room
-        self.guests = guests
+        self.guest = guest
         self.status = status
         self.start_date = start_date
         self.end_date = end_date
@@ -14,7 +18,7 @@ class Booking:
     def __str__(self):
         return (
             f"Room: {self.room} \n"
-            f"Guests: {self.guests} \n"
+            f"Guests: {self.guest} \n"
             f"Status: {self.status} \n"
             f"Dates: {self.start_date} \n"
             f"Dates: {self.end_date} \n"

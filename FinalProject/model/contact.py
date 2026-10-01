@@ -2,7 +2,7 @@
 
 
 class Contact:
-    def __init__(self, email, mobile):
+    def __init__(self, email: str, mobile: str):
         self.email = email
         self.mobile = mobile
 

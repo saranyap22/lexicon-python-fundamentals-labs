@@ -1,7 +1,7 @@
 class Room:
     """Represent a bookable Room in a Hotel"""
 
-    def __init__(self, number, category, area, max_guests, price, is_available=True):
+    def __init__(self, number: str, category: str, area: int, max_guests: int, price: float, is_available: bool = True):
         self.number = number
         self.type = category
         self.area = area

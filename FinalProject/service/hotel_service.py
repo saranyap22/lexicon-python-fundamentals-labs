@@ -1,14 +1,16 @@
 from model.hotel import Hotel
+from model.room import Room
+from model.contact import Contact
 
 
 class HotelService:
 
-    hotels = {}
+    hotels: dict[str, Hotel] = {}
 
-    def create_hotel(self, name, rooms, contact, address, ):
+    def create_hotel(self, name: str, rooms: set[Room], contact: Contact, address, ):
         self.hotels[name] = Hotel(name, rooms, contact, address)
 
-    def find_hotel(self, hotel_name):
+    def find_hotel(self, hotel_name: str):
         hotel = self.hotels.get(hotel_name)
 
         if hotel is None:
@@ -16,7 +18,7 @@ class HotelService:
 
         return hotel
 
-    def find_room(self, hotel_name, room_number):
+    def find_room(self, hotel_name: str, room_number: str):
         hotel = self.find_hotel(hotel_name)
         rooms = hotel.rooms
         if not rooms:
