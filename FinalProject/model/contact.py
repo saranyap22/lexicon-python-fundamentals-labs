@@ -8,8 +8,8 @@ class Contact:
 
     def __str__(self):
         return (
-            f"Email: {self.email}\n"
-            f"Mobile: {self.mobile}\n"
+            f"Email: {self.email} "
+            f"Mobile: {self.mobile} "
         )
 
     def __repr__(self):

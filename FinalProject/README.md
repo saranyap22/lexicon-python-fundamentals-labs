@@ -17,7 +17,6 @@ Build Booking system for Hotel Management which handles create Booking, manage B
 - **Booking** - Represent the combined data related eachother of all standalone data
 
 ## Booking Statuses
-- ```RESERVED```
 - ```CONFIRMED```
 - ```UPDATED```
 - ```CANCELLED```
@@ -36,7 +35,7 @@ Build Booking system for Hotel Management which handles create Booking, manage B
 - Created Class for Hotel, Room, Guest,Booking objects
 - Created Booking features like create booking with validations
     - Business rule implementation for conflict booking
-        - ````Create Booking request with same dates or conflicting dates of booked````
+        - Create Booking request with same dates or conflicting dates of booked
 - Manage Booking (view, update and Cancellation)
 - Proper object state tracking for all the Rooms of Hotel
 - All objects interacts with each other

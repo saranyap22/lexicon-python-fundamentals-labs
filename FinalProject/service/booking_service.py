@@ -21,13 +21,15 @@ class BookingService:
         self.validate_room(start_date, end_date, room)
 
         booking = Booking(room, start_date, end_date,
-                          no_of_guests, guest, status="CONFIRMED")
+                          no_of_guests, guest)
+        booking.confirm()
         self.bookings.append(booking)
-        print(f"Created Booking: {booking} and added to Booking List")
+        print(f"Created Booking and added to Booking List")
+        self.display_booking_summary(booking)
 
     def check_in_booking(self, room_number: str, start_date: str, end_date: str):
         bookings = self.filter_active_booking_by_date(
-            self.retrieve_booking_by_room(room_number), start_date, end_date)
+            self.retrieve_booking_by_room_number(room_number), start_date, end_date)
 
         if not bookings:
             raise ValueError("No active Booking not Found")
@@ -36,17 +38,21 @@ class BookingService:
             if not booking.is_confirmed():
                 raise ValueError(
                     f"Booking status {booking.status} not confirmed")
-            booking.check_in(datetime.now())
+            booking.check_in(datetime.now().strftime("%d-%m-%Y %H:%M"))
+            print(
+                f"Successfully checked-in for {booking.guest.name} | {booking.room.number} | {booking.checked_in_time}")
 
     def check_out_booking(self, room_number: str, start_date: str, end_date: str):
         bookings = self.filter_active_booking_by_date(
-            self.retrieve_booking_by_room(room_number), start_date, end_date)
+            self.retrieve_booking_by_room_number(room_number), start_date, end_date)
 
         for booking in bookings:
             if not booking.is_checked_in():
                 raise ValueError(
                     f"Booking status {booking.status} not checked in")
-            booking.check_out(datetime.now())
+            booking.check_out(datetime.now().strftime("%d-%m-%Y %H:%M"))
+            print(
+                f"Successfully checked-in for {booking.guest.name} | {booking.room.number} | {booking.checked_out_time}")
 
     def validate_room(self, start_date: str, end_date: str, room: Room):
         if room is None:
@@ -65,7 +71,14 @@ class BookingService:
             if self.guest_service.find_guest(guest_name) == booking.guest
         ]
 
-    def retrieve_booking_by_room(self, room_number: str):
+    def retrieve_booking_by_room(self, room: Room):
+        return [
+            booking
+            for booking in self.bookings
+            if room == booking.room
+        ]
+
+    def retrieve_booking_by_room_number(self, room_number: str):
         return [
             booking
             for booking in self.bookings
@@ -81,15 +94,16 @@ class BookingService:
 
     def cancel_booking(self, room_number: str, start_date: str, end_date: str):
         bookings = self.filter_active_booking_by_date(
-            self.retrieve_booking_by_room(room_number), start_date, end_date)
+            self.retrieve_booking_by_room_number(room_number), start_date, end_date)
 
         if not bookings:
             raise ValueError("No active Booking not Found")
         for booking in bookings:
             if not booking.is_active():
                 raise ValueError(
-                    f"Booking status {booking.status} not cancellable")
+                    f"Booking status is {booking.status.value} not cancellable")
             booking.cancel()
+            print("Your booking is cancelled")
 
     def __str__(self):
         return (
@@ -97,8 +111,8 @@ class BookingService:
             for booking in self.bookings
         )
 
-    def check_availability_for_dates(self, room_number: str, start_date: str, end_date: str):
-        matched_bookings = self.retrieve_booking_by_room(room_number)
+    def check_availability_for_dates(self, room: Room, start_date: str, end_date: str):
+        matched_bookings = self.retrieve_booking_by_room(room)
 
         for booking in matched_bookings:
             if start_date <= booking.end_date and end_date >= booking.start_date:
@@ -106,12 +120,15 @@ class BookingService:
                     f"Room {booking.room.number} not available, already booked for the requested dates")
 
     def summary_of_bookings(self):
-        print(f"{"Room":10} {"Start Date":^10} {"End Date":^10} {"No Of Guests":^15} {"Status":<15} {"Guests":<10}")
+        print(f"\n{"Room":10} {"Start Date":^15} {"End Date":^15} {"No Of Guests":^15} {"Status":<15} {"Guests":<10}")
         print("---------------------------------------------------------------------")
         for booking in self.bookings:
-            print(f"{booking.room.number:<10}",
-                  f"{booking.start_date:^10}"
-                  f"{booking.end_date:^10}"
-                  f"{booking.no_of_guests:^15}"
-                  f"{booking.status:<15}"
-                  f"{booking.guest.name:<10}")
+            self.display_booking_summary(booking)
+
+    def display_booking_summary(self, booking):
+        print(f"{booking.room.number:<10}",
+              f"{booking.start_date:^15}"
+              f"{booking.end_date:^15}"
+              f"{booking.no_of_guests:^15}"
+              f"{booking.status.value:<15}"
+              f"{booking.guest.name:<10}")

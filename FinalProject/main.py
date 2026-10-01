@@ -73,6 +73,10 @@ booking_service.create_booking("Hotel Grand Palace",
 booking_service.create_booking("Hotel Grand Palace",
                                "10h", "3-10-2026", "4-10-2026", 1, "Grace")
 
+# Simulate Negative scenario for create Booking
+# booking_service.create_booking("Hotel Grand Palace",
+#                                "", "26-9-2026", "27-9-2026", 1, "Grace")
+
 # ----------------------------------------
 # Simulate Retrieve Booking
 booking_service.retrieve_booking_by_guest("Grace")

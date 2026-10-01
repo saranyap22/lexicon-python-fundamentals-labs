@@ -12,7 +12,7 @@ class Guest:
             f"Name: {self.name} "
             f"Age: {self.age} "
             f"Contact: {self.contact} "
-            f"Address: {self.address}"
+            f"Address: {self.address} "
         )
 
     def __repr__(self):

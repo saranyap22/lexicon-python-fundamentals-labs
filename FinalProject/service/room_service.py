@@ -18,3 +18,7 @@ class RoomService:
 
     def find_room(self, hotel_name, number):
         return self.hotel_service.find_room(hotel_name, number)
+
+    def list_rooms(self, hotel_name):
+        hotel = self.hotel_service.find_hotel(hotel_name)
+        return hotel.rooms
