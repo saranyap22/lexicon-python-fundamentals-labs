@@ -26,3 +26,6 @@ class GuestService:
             raise ValueError("Guest doest not exist")
 
         return guest
+
+    def get_all_guest_names(self, guests):
+        return [guest.name for guest in guests]

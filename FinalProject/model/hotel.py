@@ -2,7 +2,7 @@ class Hotel:
     """Represent a Hotel """
 
     def __init__(self, name, rooms=None, contact=None, address=None):
-        self.name = name,
+        self.name = name
         self.rooms = rooms if rooms is not None else set()
         self.contact = contact if contact is not None else []
         self.address = address if address is not None else []

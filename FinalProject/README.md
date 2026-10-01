@@ -50,7 +50,7 @@ Build Booking system for Hotel Management which handles create Booking, manage B
 - Remove room feature needs to be implemented for hotel
 - Current Booking object state transition is not clear.
     - ```current ('NEW','CANCELLED')```
-    - ```to be corrected ( 'RESERVED','CONFIRMED','UPDATED','CANCELLED')```
+    - ```to be corrected ( 'RESERVED','CONFIRMED','CANCELLED','CHECKED_IN', 'CHECKED_OUT' )```
 - Statistics on all room occupancy
 - Implement HotelService to have its own hotel collection to keep track of object state
 - Implement Guest Service to handle create and update guests profile

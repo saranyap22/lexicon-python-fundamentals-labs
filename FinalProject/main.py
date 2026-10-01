@@ -67,6 +67,12 @@ booking_service = BookingService(hotel_service, room_service, guest_service)
 booking_service.create_booking("Hotel Grand Palace",
                                "101c", "26-9-2026", "27-9-2026", 1, "Grace")
 
+booking_service.create_booking("Hotel Grand Palace",
+                               "56l", "30-9-2026", "30-9-2026", 1, "Grace")
+
+booking_service.create_booking("Hotel Grand Palace",
+                               "10h", "3-10-2026", "4-10-2026", 1, "Grace")
+
 # ----------------------------------------
 # Simulate Retrieve Booking
 booking_service.retrieve_booking_by_guest("Grace")
@@ -77,4 +83,16 @@ booking_service.retrieve_booking_by_guest("Grace")
 booking_service.summary_of_bookings()
 
 # ----------------------------------------
-# Simulate update Booking
+# Simulate Cancel Booking
+booking_service.cancel_booking("101c", "26-9-2026", "27-9-2026")
+booking_service.retrieve_booking_by_room("101c")
+
+booking_service.summary_of_bookings()
+
+# -----------------------------------------
+# Simulate Check-In Booking
+booking_service.check_in_booking("56l", "30-9-2026", "30-9-2026")
+booking_service.summary_of_bookings()
+
+booking_service.check_out_booking("56l", "30-9-2026", "30-9-2026")
+booking_service.summary_of_bookings()
