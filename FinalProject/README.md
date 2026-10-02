@@ -5,7 +5,7 @@ Manages Life cycles of Hotel Booking System
 
 
 ## Problem Statement
-Build Booking system for Hotel Management which handles create Booking, manage Booking (update and cancellation), view booking infomation. 
+Build Booking system for Hotel room Booking which handles create Booking, manage Booking (update and cancellation), view booking infomation. 
 
 ## Object / Responsibilities
 - **Hotel** - Represents Hotel consists of one or multiple rooms object
@@ -16,9 +16,12 @@ Build Booking system for Hotel Management which handles create Booking, manage B
 
 - **Booking** - Represent the combined data related eachother of all standalone data
 
+- **Contact** - Represent the Contact information
+
 ## Booking Statuses
 - ```CONFIRMED```
-- ```UPDATED```
+- ```CHECKED_IN```
+- ```CHECKED_OUT```
 - ```CANCELLED```
 
 ## Minimum Viable Version (v1)
