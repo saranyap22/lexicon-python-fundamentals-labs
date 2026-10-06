@@ -42,4 +42,23 @@ FROM products ORDER BY PRICE;
 
 -----------Excercise 7------------
 
-SELECT first_name, city FROM customers
+SELECT first_name, COALESCE(city,'Unknown') AS city FROM customers;
+
+-----------Excercise 8------------
+SELECT first_name, STRFTIME('%m',joined_date) FROM customers;
+SELECT first_name FROM customers WHERE STRFTIME('%m',joined_date) IN ('01','02','03','04','05','06');
+--optimized--
+SELECT first_name FROM customers WHERE CAST(STRFTIME('%m',joined_date) AS INTEGER) <= 6;
+
+-----------Excercise 9-----------
+SELECT name AS product FROM products ORDER BY LENGTH(name) DESC LIMIT 1;
+
+--optimized--
+SELECT name AS prodcut FROM products WHERE LENGTH(name) = (SELECT MAX(LENGTH(name)) FROM products);
+
+----------Excercise 10-----------
+
+SELECT SUBSTR(email,1,(INSTR(email,'@') -1)) FROM customers; -- python equivalent email[0:5]
+
+-------------------------------------------
+
