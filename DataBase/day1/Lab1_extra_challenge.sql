@@ -60,5 +60,24 @@ SELECT name AS prodcut FROM products WHERE LENGTH(name) = (SELECT MAX(LENGTH(nam
 
 SELECT SUBSTR(email,1,(INSTR(email,'@') -1)) FROM customers; -- python equivalent email[0:5]
 
--------------------------------------------
 
+
+--------------LEVEL 3------------------
+
+----------Excercise 11-------------
+
+SELECT name AS product FROM products WHERE price > (SELECT AVG(price) FROM products);
+
+----------Excercise 12-------------
+-- price Without casting displays as REAL number
+SELECT name || ' costs ' || price || 'kr' AS price_list FROM products;
+
+-- price with casting displayed as WHOLE number
+SELECT name || ' costs ' || CAST (price AS INTEGER) || 'kr' AS price_list FROM products ORDER BY price;
+
+
+----------Excercise 13-------------
+
+SELECT city, count(*) from customers GROUP BY city;
+
+----------------------------------------------------
