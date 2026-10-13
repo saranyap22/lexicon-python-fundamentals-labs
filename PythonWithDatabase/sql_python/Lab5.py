@@ -36,8 +36,16 @@ cursor.execute("SELECT COUNT(*) FROM products WHERE category = ?",
 print(f"{product_category:<15} : {cursor.fetchone()[0]}")
 
 # Exercise 4 : Problem of building SQL with f string
+# In this case user can inject direct SQL query in the input that might harm output or corrupt the database (Ex. DELETE * FROM products;)
 product_category = input("Enter product category to see number of products: ")
 
 cursor.execute(
     f"SELECT COUNT(*) FROM products WHERE category = '{product_category}'")
 print(f"{product_category:<15} : {cursor.fetchone()[0]}")
+
+# In the below input SQL Injection is happened and every row incorrectly counted
+# Enter product category to see number of products: ' OR '1' = '1
+# ' OR '1' = '1   : 12
+
+
+# Excercise 5
