@@ -1,0 +1,72 @@
+from pymongo import MongoClient
+from pprint import pprint
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["webshop"]
+
+# Exercise 1
+# Print the name of every product in the Accessories category.
+for product in db.products.find({"category": "Accessories"}):
+    pprint(product["name"])
+
+# Exercise 2
+# Print the first and last name of every customer who lives in Göteborg.
+for customer in db.customers.find({"city": "Göteborg"}):
+    pprint(f"{customer["first_name"]} {customer["last_name"]}")
+
+# Exercise 3
+# Python: print the name and price of every product, one per line.
+for product in db.products.find():
+    print(f"{product["name"]:<20} {product["price"]} kr")
+
+# Exercise 4
+# Python: how many customers live in Uppsala? Use count_documents.
+count = db.customers.count_documents({"city": "Uppsala"})
+print("No of Customers lives in Uppsala", count)
+
+# Exercise 5
+# Python: find the product named Sandals with find_one and print how many are in stock.
+product = db.products.find_one({"name": "Sandals"})
+print("No of Sandals in stock:", product["stock"])
+
+# Exercise 6
+# Python: print the first name of every customer who gets the newsletter (newsletter is True)
+customers = db.customers.find({"newsletter": True})
+for customer in customers:
+    print("Name:", customer["first_name"])
+
+# Exercise 7
+# Python: add yourself as a customer with insert_one, without an _id. Print the inserted_id. Then find
+# yourself again with find_one and your email, and print yourself with pprint.
+result = db.customers.insert_one(
+    {"first_name": "Saranya", "last_name": "Palanisamy", "email": "sara@gmail.com", "city": "solna"})
+print("Id:", result.inserted_id)
+pprint(db.customers.find_one({"email": "sara@gmail.com"}))
+
+# Exercise 8
+# Python: add two new products with insert_many (give them _id 13 and 14, and include tags). Then
+# print how many products there are.
+# result = db.products.insert_many([
+#     {"_id": 13, "name": "Scarf", "category": "Accessories", "price": 299,
+#         "stock": 15, "tags": ["winter"], "details": {"color": "black"}
+#      },
+#     {"_id": 14, "name": "Gloves", "category": "Accessories", "price": 399,
+#      "stock": 40, "tags": ["winter"], "details": {"color": "red"}
+#      }
+# ])
+# print(result.inserted_ids)
+# print(db.products.count_documents({}))
+
+# Exercise 9
+# Python: print every customer as 'First Last (City)'. Customers without a city should show
+# (unknown). Hint: dict.get().
+for customer in db.customers.find({}):
+    print(
+        f"{customer["first_name"]} {customer["last_name"]} ({customer.get("city", "unknown")})")
+
+
+# Exercise 10
+# Challenge: print every order as 'Order 1: 2 items'. Hint: an order's items is a list, and len() works
+# on lists.
+for order in db.orders.find({}):
+    print(f"Order {order["_id"]} : {len(order["items"])} items")
