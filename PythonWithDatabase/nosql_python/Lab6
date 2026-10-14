@@ -60,7 +60,7 @@ pprint(db.customers.find_one({"email": "sara@gmail.com"}))
 # Exercise 9
 # Python: print every customer as 'First Last (City)'. Customers without a city should show
 # (unknown). Hint: dict.get().
-for customer in db.customers.find({}):
+for customer in db.customers.find():
     print(
         f"{customer["first_name"]} {customer["last_name"]} ({customer.get("city", "unknown")})")
 
@@ -68,5 +68,5 @@ for customer in db.customers.find({}):
 # Exercise 10
 # Challenge: print every order as 'Order 1: 2 items'. Hint: an order's items is a list, and len() works
 # on lists.
-for order in db.orders.find({}):
+for order in db.orders.find():
     print(f"Order {order["_id"]} : {len(order["items"])} items")
