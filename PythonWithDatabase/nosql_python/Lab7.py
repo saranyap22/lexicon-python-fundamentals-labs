@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from pprint import pprint
+from datetime import datetime
 
 client = MongoClient("mongodb://localhost:27017/")
 db = client["webshop"]
@@ -100,3 +100,28 @@ result = db.products.update_many({"category": "Accessories"}, {
                                  "$inc": {"price": 20}})
 print(result.matched_count, result.modified_count)
 # ----------------------------------------
+
+# Exercise 9
+# Add the tag "new" to the Rain Jacket without creating duplicates, and give it a field restock_date
+# with today's date (use datetime.now()).
+# Expected: 1 product with the new tag and field (the time will be yours)
+
+print(db.products.count_documents({"name": "Rain Jacket"}))
+
+result = db.products.update_many({"name": "Rain Jacket"}, {
+                                 "$push": {"tags": "new"}, "$set": {"restock_date": datetime.now()}})
+print(result.matched_count, result.modified_count)
+# -----------------------------------------
+
+# Exercise 10
+# Challenge: delete all orders with status new placed before 2026-03-20. Count them first.
+# Hint:dates in filters are datetime objects, like datetime(2026, 3, 20).
+
+count = db.orders.count_documents(
+    {"status": "new", "order_date": {"$lt": datetime(2026, 3, 20)}})
+print(count)
+
+result = db.orders.delete_many(
+    {"status": "new", "order_date": {"$lt": datetime(2026, 3, 20)}})
+
+print(result.deleted_count)
