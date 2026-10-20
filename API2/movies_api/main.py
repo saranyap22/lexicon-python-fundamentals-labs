@@ -17,8 +17,14 @@ class Movie(BaseModel):
     year: int
 
 
+class UpdateMovie(BaseModel):
+    title: str | None = None
+    director: str | None = None
+    year: int | None = None
+
+
 @app.get("/movies")
-def get_movies(director: str | None, year: int | None):
+def get_movies(director: str | None = None, year: int | None = None):
     result = movies
 
     if director is not None:
@@ -40,7 +46,7 @@ def get_movie(movie_id: int):
 
 @app.post("/movies", status_code=201)
 def create_movie(movie: Movie):
-    movie_id = max((movie["id"] for mov in movies), default=0) + 1
+    movie_id = max((mov["id"] for mov in movies), default=0) + 1
     new_movie = {"id": movie_id, "title": movie.title,
                  "director": movie.director, "year": movie.year}
     movies.append(new_movie)
@@ -48,7 +54,7 @@ def create_movie(movie: Movie):
 
 
 @app.put("/movies/{movie_id}", status_code=200)
-def update_movie(movie_id: int, movie: Movie):
+def replace_movie(movie_id: int, movie: Movie):
     existing = find_movie(movie_id)
     if existing is not None:
         existing["title"] = movie.title
@@ -57,6 +63,29 @@ def update_movie(movie_id: int, movie: Movie):
         return existing
 
     raise HTTPException(status_code=404, detail="Movie not found")
+
+
+@app.patch("/movies/{movie_id}")
+def update_movie(movie_id: int, changes: UpdateMovie):
+    existing = find_movie(movie_id)
+    if existing is not None:
+        existing.update(changes.model_dump(exclude_unset=True))
+        return existing
+
+    raise HTTPException(status_code=404, detail="Movie not found")
+
+# -----------------------Testing edge cases - comments for update_movie-------------
+# 1. update some fields - status 200, specific fields updated
+# 2. year as number in text("1990") in update- status 200, year converted to int and updated
+# 3. year as text in update- status- 422 (Unprocessable content)
+# 4. invalid id in path("abc")- status - 422 (Unprocessable content)
+# 5. id not exist - status - 404 (Movie not found)
+# ---------------------------------------------------------------------
+
+# PUT: Replaces existing data with new data client sent. preferred when data is small and want idempotent feature for update automatically
+# PATCH: Update only few requested fields. Requires that fields are optinoal. Suitable for larger payloads where repeating data is wasteful
+
+# -----------------------------------------------------------------------
 
 
 @app.delete("/movies/{movie_id}", status_code=204)
