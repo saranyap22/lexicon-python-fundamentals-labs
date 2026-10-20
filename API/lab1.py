@@ -79,19 +79,34 @@ def create_product():
         "image": "https://champion.se/thumb/916/2560x0/CHBR220_1.webp",
         "category": "electronics"
     }
+    try:
+        response = requests.post(f"{BASE_URL}/products",
+                                 json=new_product, timeout=1)
+        response.raise_for_status()
 
-    response = requests.post(f"{BASE_URL}/products", timeout=0.1)
+        product = response.json()
+        print(product["title"], product["description"],
+              product["category"], product["price"])
+
+    except
+
+
+def update_product():
+    update_product = {"price": 900}
+
+    response = requests.patch(
+        f"{BASE_URL}/products/1", json=update_product, timeout=1)
     response.raise_for_status()
 
     product = response.json()
-    print(product["title"], product["description"],
-          product["category"], product["price"])
+    print(product["price"])
 
 
 def main():
     retrieve_products()
     retrieve_categories()
     create_product()
+    update_product()
 
 
 main()
