@@ -4,25 +4,6 @@ from api_client import get_json
 BASE_URL = "https://fakestoreapi.com"
 
 
-# def get_json(url, params=None, headers=None, timeout=5):
-#     try:
-#         response = requests.get(
-#             url, params=params, headers=headers, timeout=timeout)
-#         response.raise_for_status()
-#         return response.json()
-#     except requests.exceptions.Timeout:
-#         print("The request took too long")
-#     except requests.exceptions.ConnectionError:
-#         print("Could not connect to the server")
-#     except requests.exceptions.HTTPError as error:
-#         print(f"The server said no: {error.response.status_code}")
-#     except requests.exceptions.JSONDecodeError:
-#         print("The answer was not JSON")
-#     except requests.exceptions.RequestException as error:
-#         print(f"Something else went wrong: {type(error).__name__}")
-#     return None
-
-
 # Excercise 1
 # Sort the products by price
 def retrieve_products():
@@ -88,18 +69,26 @@ def create_product():
         print(product["title"], product["description"],
               product["category"], product["price"])
 
-    except
+    except requests.exceptions.HTTPError as error:
+        print(f"Request not accepted: reason {error.response.status_code}")
+    except requests.exceptions.RequestException as error:
+        print(f"Something went wrong: reason {type(error).__name__}")
 
 
 def update_product():
     update_product = {"price": 900}
 
-    response = requests.patch(
-        f"{BASE_URL}/products/1", json=update_product, timeout=1)
-    response.raise_for_status()
+    try:
+        response = requests.patch(
+            f"{BASE_URL}/products/1", json=update_product, timeout=1)
+        response.raise_for_status()
 
-    product = response.json()
-    print(product["price"])
+        product = response.json()
+        print(product["price"])
+    except requests.exceptions.HTTPError as error:
+        print(f"Request not accepted: reason {error.response.status_code}")
+    except requests.exceptions.RequestException as error:
+        print(f"Something went wrong: reason {type(error).__name__}")
 
 
 def main():
