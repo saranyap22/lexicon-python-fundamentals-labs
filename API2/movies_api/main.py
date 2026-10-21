@@ -1,6 +1,12 @@
-from fastapi import FastAPI, HTTPException
+import os
+from fastapi import Depends, FastAPI, HTTPException, Header
 from pydantic import BaseModel
+from dotenv import load_dotenv
 
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+if not API_KEY:
+    raise RuntimeError("API KEY is not configured or empty")
 app = FastAPI()
 movies = [
     {"id": 1, "title": "Inception", "director": "Christopher Nolan", "year": 2010},
@@ -21,6 +27,31 @@ class UpdateMovie(BaseModel):
     title: str | None = None
     director: str | None = None
     year: int | None = None
+
+
+def find_movie(movie_id):
+    for movie in movies:
+        if movie["id"] == movie_id:
+            return movie
+
+
+def check_auth(x_api_key: str | None = Header(default=None)):
+    if not API_KEY:
+        print("API_KEY is not configured or empty")
+        raise HTTPException(status_code=500)
+    if not x_api_key or not x_api_key.strip():
+        raise HTTPException(status_code=401, detail="Api key is not provided")
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401)
+# ------------------------------------------------------------------------
+# Test Auth:
+# 1. No API_KEY or EMPTY API_KEY configured or loaded from .env - Error: API KEY is not configured or empty
+# 2. No Header with x_api_key - status - 401 - detail - Api key is not provided
+# 3. Header with x_api_key has only space " " - status -401 detail - Api key is not provided
+# 4. Header with x_api_key has invalid key - status - 401 - detail- Unauthorized
+# 5. Header with x_api_key has valid key -  Authenticated and no HTTP Exception raised
+
+# ----------------------------------------------------------------------------
 
 
 @app.get("/movies")
@@ -44,7 +75,7 @@ def get_movie(movie_id: int):
     raise HTTPException(status_code=404, detail="Movie not found")
 
 
-@app.post("/movies", status_code=201)
+@app.post("/movies", dependencies=[Depends(check_auth)], status_code=201)
 def create_movie(movie: Movie):
     movie_id = max((mov["id"] for mov in movies), default=0) + 1
     new_movie = {"id": movie_id, "title": movie.title,
@@ -53,7 +84,7 @@ def create_movie(movie: Movie):
     return new_movie
 
 
-@app.put("/movies/{movie_id}", status_code=200)
+@app.put("/movies/{movie_id}", dependencies=[Depends(check_auth)], status_code=200)
 def replace_movie(movie_id: int, movie: Movie):
     existing = find_movie(movie_id)
     if existing is not None:
@@ -65,7 +96,7 @@ def replace_movie(movie_id: int, movie: Movie):
     raise HTTPException(status_code=404, detail="Movie not found")
 
 
-@app.patch("/movies/{movie_id}")
+@app.patch("/movies/{movie_id}", dependencies=[Depends(check_auth)])
 def update_movie(movie_id: int, changes: UpdateMovie):
     existing = find_movie(movie_id)
     if existing is not None:
@@ -74,7 +105,7 @@ def update_movie(movie_id: int, changes: UpdateMovie):
 
     raise HTTPException(status_code=404, detail="Movie not found")
 
-# -----------------------Testing edge cases - comments for update_movie-------------
+# -----------------------Testing edge cases patch - comments for update_movie-------------
 # 1. update some fields - status 200, specific fields updated
 # 2. year as number in text("1990") in update- status 200, year converted to int and updated
 # 3. year as text in update- status- 422 (Unprocessable content)
@@ -88,14 +119,8 @@ def update_movie(movie_id: int, changes: UpdateMovie):
 # -----------------------------------------------------------------------
 
 
-@app.delete("/movies/{movie_id}", status_code=204)
+@app.delete("/movies/{movie_id}", dependencies=[Depends(check_auth)], status_code=204)
 def delete_movie(movie_id: int):
     existing = find_movie(movie_id)
     if existing is not None:
         movies.remove(existing)
-
-
-def find_movie(movie_id):
-    for movie in movies:
-        if movie["id"] == movie_id:
-            return movie
