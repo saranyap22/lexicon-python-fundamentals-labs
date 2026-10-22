@@ -1,0 +1,87 @@
+Part 1: Check your understanding
+Exercise 1
+Explain in your own words why the Waterfall method often goes wrong when building software.
+Give two reasons.
+1. It takes really longer time to show product to customers and Customer expectations may be different from what product shown.
+2. We might not have all the requirements to create a product which is prerequisite for waterfall method, which delays actual product development.
+
+
+Exercise 2
+Pick two of the four values in the Agile Manifesto. For each one, give an example of what it could
+look like in a real team.
+1. People and talking together: It makes real difference when people in a team discuss and take decision. Get powerful ideas.
+2. Software that works: Having a real working incremental product is more valueable.
+3. Working with the customer: It align teams building product for Customer. Feedback and change is quick.
+4. Responding to a change: Agile works in shorter timeline, which enables responding to a change qucik and plan in upcoming sprints.
+
+Exercise 3
+Who does what? Write Product Owner, Scrum Master or Developers for each line.
+a) Decides the order of the Product Backlog - Product Owner
+b) Decides how to build a feature - Developers
+c) Helps the team when a test server has been down for two days - Scrum master 
+d) Talks to customers about what they need - Product Owner
+e) Coaches the team when the Daily Scrum takes 45 minutes - Scrum Master
+
+
+Exercise 4
+Your team works in two-week sprints. In the middle of a sprint, the CEO comes in and wants a new
+feature right away. What should happen, according to Scrum?
+Product owner adds this feature to product backlog and discus with the teams if changes can be added in current sprint.
+If no current stories related to sudden priority, it will be added to top of spring backlog.
+
+Exercise 5
+What is the difference between the Sprint Review and the Sprint Retrospective? Who takes part in
+each?
+Sprint Review: Is showing the product to customer and get Feedback
+Sprint Retrospective: Is reviewing the process of scrum activities.
+
+
+Exercise 6
+Rewrite these backlog items as user stories (As a ..., I want ..., so that ...):
+a) Add login
+As a user I want to login to the webshop app so that I can view or purchase products from webshop app.
+
+b) Export orders to Excel
+As a Shop staff I want to export orders to excel so that I can keep track of all the orders and delivery status.
+
+c) Dark mode
+As a user I want to change the theme to Dark mode so that I can view the app in low light environment.
+
+
+Exercise 7
+Write three acceptance criteria for this story: As a customer, I want to see my order history, so
+that I can buy the same thing again.
+1. User can see all the orders history with details (order_id, order_date,)
+2. User can filter based on order status
+3. User can filter based on order_date
+4. User can provided with purchase_again button to reorder same items.
+5. User successfully able to re order same items.
+
+
+Exercise 8
+Write a Definition of Done for a team of four developers. Include at least five points.
+1. Is the code covers all the functionality mentioned in the story?
+2. Code is reviewed by other team member?
+3. Test completed and passed
+4. Code merged with main
+5. feature ready for production deployment 
+
+Exercise 9
+A team's Daily Scrum takes 45 minutes. Everyone stands facing the manager and reports what
+they did. What is wrong, and what would you suggest?
+1. Scrum should take as litle time max 15 min.
+2. It should only focus on what what we are going to focus today and any blockers?
+3. Scrum master should step in and make sure people limiting their time while talking only important things.
+4. Developers can tell that we can take any other detailed discussions outside of scrum in separate meeting with only concerning people.
+
+Exercise 10
+Scrum or Kanban? Choose for each team and explain why.
+a) A team building a new mobile app - Scrum : Suitable for all are new features and no priority tickets or issue fixing would needed as in maintenance.
+b) An IT support desk - Kanban: Suitable for all the activities include most issue fixing and sudden priotization of production issues.
+c) A team fixing bugs in a webshop that is already live- Kanban: Suitable for all the activities include most issue fixing and sudden priotization of production issues.
+
+
+Exercise 11
+In planning poker, four developers show 2, 3, 3 and 13 for the same story. What should the team
+do next?
+The difference between the minimum and max story points is huge. So team must go through the requirement  and technical details of implementation understanding to recheck why the estimate differs in developers and check again in planning pokers.
