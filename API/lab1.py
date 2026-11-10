@@ -9,6 +9,7 @@ BASE_URL = "https://fakestoreapi.com"
 def retrieve_products():
     products = get_json(f"{BASE_URL}/products")
     if products is not None:
+        print(products)
         sorted_products = sorted(
             products, key=lambda product: product["price"])
         for line_item, product in enumerate(sorted_products, 1):
