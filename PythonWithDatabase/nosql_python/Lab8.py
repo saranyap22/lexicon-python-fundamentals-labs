@@ -57,3 +57,11 @@ except (WriteError, BulkWriteError) as error:
 
 # Exercise 4
 # How many customers live in each city? Use $group. Biggest city first.
+customers = db.customers.aggregate([
+    {"$match": {}},
+    {"$group": {"city": "$city", "customers": {"$sum": 1}}},
+    {"$sort": -1}
+])
+
+for city, customer in customers:
+    print(city, customers)
